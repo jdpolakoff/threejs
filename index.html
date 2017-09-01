@@ -18,29 +18,47 @@
     <script src="js/digitalglitch.js"></script>
     <script src="js/glitchpass.js"></script>
     <script>
+
+     //As a first step, all Three.js apps will need a scene.
+     //Created elements will later be passsed into the scene
      var scene = new THREE.Scene()
+     //The camera is another indespensible component of a Three.js app
+     //The camera establishes the perspective of the app user and has an
+     //aspect ratio defined here as the width of the screen divided by the height
      var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 3000 )
+     //The renderer is the third crucial component.
+     //Among other utilities, it establishes the size of the canvas
      var renderer = new THREE.WebGLRenderer( {alpha: true} )
      renderer.setSize( window.innerWidth, window.innerHeight)
+     //finally we append our canvas ('defined here as renderer.domElement')
+     //to our document's body
      document.body.appendChild( renderer.domElement )
 
+     //this is where we begin to create our shapes, first by picking a material
      var material = new THREE.MeshNormalMaterial( {
      color: 0xf442e5 })
 
+     //next, we define the geometry of our shape, in this case a torus knot
      var geometry = new THREE.TorusKnotGeometry(100, 50, 80, 60)
 
-    var cube = new THREE.Mesh( geometry, material )
-    cube.position.set(400, 0, -500)
-    scene.add( cube )
+     //this object started out as a box shape, so it was saved to a variable called cube
+     //saving the new object to a varible will allow us to manipulate it further down in the code
+     var cube = new THREE.Mesh( geometry, material )
 
+     //here we're setting the object's x, y an z positioning on the canvas
+     cube.position.set(400, 0, -500)
+     // and adding it to the scene
+     scene.add( cube )
 
+     //here's another box object we're creating
     var material = new THREE.MeshLambertMaterial( { map: THREE.ImageUtils.loadTexture('mememan.png') })
     var geometry = new THREE.BoxGeometry(100, 100, 100)
     var cube2 = new THREE.Mesh( geometry, material )
     cube2.position.set(-800, 0, -800)
     scene.add( cube2 )
 
-
+    //these light variables give us the shadow effects that help create
+    //the 3d effect on our objects.
      var light = new THREE.AmbientLight(0xffffff, .3)
      scene.add( light )
 
@@ -49,8 +67,13 @@
 
      camera.position.z = 5
 
+     //here we're starting to add some effects to our screen with
+     //effect composer.
      var composer = new THREE.EffectComposer(renderer)
      //passes
+     //next we'll start using a render pass to apply filters
+     //effects composer and render pass need to be downloaded from
+     //the three.js repo and then loaded locally
      var renderPass = new THREE.RenderPass(scene, camera)
      composer.addPass(renderPass)
     //  renderPass.renderToScreen = true
@@ -62,6 +85,7 @@
      composer.addPass(pass2)
      pass2.renderToScreen = true
 
+     //here we're creating a plane that will be our floor
      var material2 = new THREE.MeshLambertMaterial( {
        color: 0xffffff,
        wireframe: true})
@@ -71,7 +95,7 @@
        plane.position.y = -200
        scene.add(plane)
 
-       //loading model from Blender
+       //loading 3d model from Blender using JsonLoader
        var loader = new THREE.JSONLoader()
        loader.load('untitled.json', handle_load)
 
@@ -87,8 +111,11 @@
          mesh.position.z = -10
        }
 
-
+      //this is the function that lets us manipulate our objects
+      //here we're rotating them on their x and y axes
       function animate() {
+      //request animation frame will do the work of asking the
+      //window to refresh frequently enough to create an animation
       requestAnimationFrame( animate )
       cube.rotation.x += 0.01
       cube.rotation.y += 0.01
@@ -99,7 +126,7 @@
       renderer.render( scene, camera )
       composer.render( 0.05 )
     }
-
+      //and we call the function to set off the rotations
       animate()
 
 

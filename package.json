@@ -1,0 +1,23 @@
+{
+  "name": "threejs",
+  "version": "1.0.0",
+  "description": "A sample Three.js app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdpolakoff/threejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdpolakoff/threejs/issues"
+  },
+  "homepage": "https://github.com/jdpolakoff/threejs#readme",
+  "dependencies": {
+    "http-server": "^0.10.0"
+  }
+}
