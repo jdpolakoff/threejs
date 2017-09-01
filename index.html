@@ -15,6 +15,8 @@
     <script src="js/renderpass.js"></script>
     <script src="js/shaderpass.js"></script>
     <script src="js/sepiashader.js"></script>
+    <script src="js/digitalglitch.js"></script>
+    <script src="js/glitchpass.js"></script>
     <script>
      var scene = new THREE.Scene()
      var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 3000 )
@@ -39,19 +41,18 @@
 
      camera.position.z = 5
 
-     renderer.shadowMap.enabled = true
-
-     //composer
      var composer = new THREE.EffectComposer(renderer)
-
      //passes
      var renderPass = new THREE.RenderPass(scene, camera)
      composer.addPass(renderPass)
-     renderPass.renderToScreen = true
-
-     pass1 = new THREE.ShaderPass(THREE.SepiaShader)
+    //  renderPass.renderToScreen = true
+     //
+     var pass1 = new THREE.ShaderPass(THREE.SepiaShader)
      composer.addPass(pass1)
-     pass1.renderToScreen = true
+
+     var pass2 = new THREE.GlitchPass(0)
+     composer.addPass(pass2)
+     pass2.renderToScreen = true
 
      var material2 = new THREE.MeshLambertMaterial( {
        color: 0xffffff,
@@ -68,7 +69,8 @@
       requestAnimationFrame( animate )
       cube.rotation.x += 0.01
       cube.rotation.y += 0.01
-      renderer.render( scene, camera )
+      // renderer.render( scene, camera )
+      composer.render( 0.05 )
     }
 
       animate()
