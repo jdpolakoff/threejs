@@ -63,13 +63,22 @@
        plane.position.y = -200
        scene.add(plane)
 
+       //model
+       var loader = new THREE.JSONLoader()
+       loader.load('untitled.json', handle_load)
+
+       function handle_load(geometry, materials) {
+         var mesh = new THREE.Mesh(geometry, materials)
+         scene.add(mesh)
+         mesh.position.z = -10
+       }
 
 
       function animate() {
       requestAnimationFrame( animate )
       cube.rotation.x += 0.01
       cube.rotation.y += 0.01
-      // renderer.render( scene, camera )
+      renderer.render( scene, camera )
       composer.render( 0.05 )
     }
 
